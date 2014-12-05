@@ -1,0 +1,176 @@
+---
+title: "Regression Models Quiz 1"
+author: "Brian Baquiran"
+date: "December 4, 2014"
+output: html_document
+---
+### Question 1
+Consider the data set given below
+
+```{r}
+x <- c(0.18, -1.54, 0.42, 0.95)
+
+# And weights given by
+w <- c(2, 1, 3, 1)
+```
+Give the value of μ that minimizes the least squares equation $\sum_{i=1}^{n}w_i(x_i-{\mu})^2$
+
+* __0.0025__ X
+* 1.077
+* 0.300
+* __0.1471__
+
+__Answer__
+
+This is a weighted mean. We can do it as:
+```{r}
+sum(x*w)/sum(w)
+```
+or use the built-in function
+```{r}
+weighted.mean(x,w)
+```
+
+###Question 2
+Consider the following data set
+
+```{r}
+x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
+y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)
+```
+
+Fit the regression through the origin and get the slope treating y as the outcome and x as the regressor. (Hint, do not center the data since we want regression through the origin, not through the means of the data.)
+
+* 0.59915
+* -1.713
+* __0.8263__
+* -0.04462
+
+__Answer__
+```{r}
+lm(y ~ x -1)
+```
+
+We can verify this with a plot
+```{r}
+# xlim and ylim to include origin in window
+plot(x=x,y=y,xlim=c(0,2),ylim=c(0,2))
+abline(lm(y ~ x -1))
+```
+
+### Question 3
+Do data(mtcars) from the datasets package and fit the regression model with mpg as the outcome and weight as the predictor. Give the slope coefficient.
+
+* -9.559
+* 0.5591
+* 30.2851
+* __-5.344__
+
+__Answer__
+```{r}
+data(mtcars)
+lm(mtcars$mpg ~ mtcars$wt)
+```
+
+### Question 4
+Consider data with an outcome (Y) and a predictor (X). The standard deviation of the predictor is one half that of the outcome. The correlation between the two variables is .5. What value would the slope coefficient for the regression model with Y as the outcome and X as the predictor?
+
+* __0.25__ X
+* 3
+* 4
+* 1
+
+__Answer__
+The slope of the regression line with X as the outcome and Y as the predictor is Cor(X,Y)Sd(X)/Sd(Y). Since Sd(X) is 0.5Sd(Y), the slope is 0.5*0.5 or 0.25
+
+### Question 5
+Students were given two hard tests and scores were normalized to have empirical mean 0 and variance 1. The correlation between the scores on the two tests was 0.4. What would be the expected score on Quiz 2 for a student who had a normalized score of 1.5 on Quiz 1?
+
+* 0.16
+* __0.6__
+* 1.0
+* 0.4
+
+__Answer__
+```{r}
+0.4*1.5
+```
+
+### Question 6
+Consider the data given by the following
+```{r}
+x <- c(8.58, 10.46, 9.01, 9.64, 8.86)
+```
+What is the value of the first measurement if x were normalized (to have mean 0 and variance 1)?
+
+* 9.31
+* 8.86
+* __-0.9719__
+* 8.58
+
+__Answer__
+```{r}
+sdx <- sd(x)
+meanx <- mean(x)
+x_norm <- (x - meanx)/sdx
+print(x_norm)
+```
+
+### Question 7
+Consider the following data set (used above as well). What is the intercept for fitting the model with x as the predictor and y as the outcome?
+
+```{r}
+x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
+y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)
+```
+
+* __1.567__
+* 1.252
+* 2.105
+* -1.713
+
+__Answer__
+```{r}
+lm(y ~ x)
+```
+
+### Question 8
+You know that both the predictor and response have mean 0. What can be said about the intercept when you fit a linear regression?
+
+* __It must be identically 0.__
+* It is undefined as you have to divide by zero.
+* Nothing about the intercept can be said from the information given.
+* It must be exactly one.
+
+
+### Question 9
+Consider the data given by
+
+```{r}
+x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
+```
+What value minimizes the sum of the squared distances between these points and itself?
+
+* __0.573__
+* 0.8
+* 0.36
+* 0.44
+
+```{r}
+mean(x)
+```
+
+####Question 10
+Let the slope having fit Y as the outcome and X as the predictor be denoted as $\beta_1$. Let the slope from fitting X as the outcome and Y as the predictor be denoted as $\gamma_1$. Suppose that you divide $\beta_1$ by $\gamma_1$; in other words consider $\frac{\beta_1}{\gamma_1}$. What is this ratio always equal to?
+
+* __Var(Y)/Var(X)__
+* 2SD(Y)/SD(X)
+* __1__ X
+* Cor(Y,X)
+
+__Answer__
+$$\beta_1=Cor(Y,X)\frac{Sd(Y)}{Sd(X)}$$
+$$\gamma_1=Cor(Y,X)\frac{Sd(X)}{Sd(Y)}$$
+$$\frac{\beta_1}{\gamma_1}=\frac{Cor(Y,X)\frac{Sd(Y)}{Sd(X)}}{Cor(Y,X)\frac{Sd(X)}{Sd(Y)}}$$
+$$\frac{\beta_1}{\gamma_1}=\frac{Sd(Y)}{Sd(X)}\frac{Sd(Y)}{Sd(X)}=\frac{Sd(Y)^2}{Sd(X)^2}=\frac{Var(Y)}{Var(X)}$$
+
