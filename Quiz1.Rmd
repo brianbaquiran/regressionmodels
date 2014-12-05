@@ -15,7 +15,7 @@ w <- c(2, 1, 3, 1)
 ```
 Give the value of μ that minimizes the least squares equation $\sum_{i=1}^{n}w_i(x_i-{\mu})^2$
 
-* __0.0025__ X
+* 0.0025
 * 1.077
 * 0.300
 * __0.1471__
@@ -71,17 +71,27 @@ __Answer__
 data(mtcars)
 lm(mtcars$mpg ~ mtcars$wt)
 ```
+```{r,echo=FALSE}
+plot(x=mtcars$wt,y=mtcars$mpg)
+abline(lm(mtcars$mpg ~ mtcars$wt))
+```
 
 ### Question 4
 Consider data with an outcome (Y) and a predictor (X). The standard deviation of the predictor is one half that of the outcome. The correlation between the two variables is .5. What value would the slope coefficient for the regression model with Y as the outcome and X as the predictor?
 
-* __0.25__ X
+* 0.25
 * 3
 * 4
-* 1
+* __1__
 
 __Answer__
-The slope of the regression line with X as the outcome and Y as the predictor is Cor(X,Y)Sd(X)/Sd(Y). Since Sd(X) is 0.5Sd(Y), the slope is 0.5*0.5 or 0.25
+
+The slope of the regression line with X as the outcome and Y as the predictor is:
+$$\hat{\beta_1}=Cor(X,Y)\frac{Sd(Y)}{Sd(X)}$$
+
+where $Sd(X)=\frac{1}{2}Sd(Y)$ and $Cor(X,Y)=0.5$
+
+$$=0.5\frac{Sd(Y)}{\frac{1}{2}Sd(Y)}=(0.5)(2)=1$$
 
 ### Question 5
 Students were given two hard tests and scores were normalized to have empirical mean 0 and variance 1. The correlation between the scores on the two tests was 0.4. What would be the expected score on Quiz 2 for a student who had a normalized score of 1.5 on Quiz 1?
@@ -165,7 +175,7 @@ Let the slope having fit Y as the outcome and X as the predictor be denoted as $
 
 * __Var(Y)/Var(X)__
 * 2SD(Y)/SD(X)
-* __1__ X
+* 1 X
 * Cor(Y,X)
 
 __Answer__
